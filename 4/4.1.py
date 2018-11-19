@@ -13,9 +13,10 @@ def read(inp):
 
 
 if __name__ == '__main__':
-    inp = open('1', 'r')
+    inp = open('2', 'r')
     # input = sys.stdin
 
     lines = read(inp)
+    s_lines = sorted(lines, key=lambda l: l[1])
 
-    print(lines)
+    print(s_lines)
