@@ -28,7 +28,7 @@ def solve(lines):
 
 
 if __name__ == '__main__':
-    inp = open('4_1/3', 'r')
+    inp = open('1/3', 'r')
     # inp = sys.stdin
 
     lines = read(inp)
