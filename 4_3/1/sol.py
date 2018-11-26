@@ -21,13 +21,15 @@ class PQueue:
 
     def _sift_up(self, idx):
         el = self.q[idx]
-        parent_idx = int(math.ceil((idx-1) / 2))
+        parent_idx = int(math.ceil((idx - 1) / 2))
         parent = self.q[parent_idx]
         if parent < el:
             self._swap(idx, parent_idx)
             self._sift_up(parent_idx)
 
     def _sift_down(self, idx):
+        if len(self.q) == 0:
+            return
         el = self.q[idx]
         child_idx_1 = min((idx * 2) + 1, len(self.q) - 1)
         child_idx_2 = min((idx * 2) + 2, len(self.q) - 1)
@@ -59,7 +61,7 @@ def read(inp):
 
 
 if __name__ == '__main__':
-    inp = open('1', 'r')
+    inp = open('3', 'r')
     # inp = sys.stdin
 
     heap = PQueue()
