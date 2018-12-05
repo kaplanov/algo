@@ -92,8 +92,8 @@ if __name__ == '__main__':
     lines, points = read_array(inp)
     p_cp = list(points)
 
-    print(lines)
-    print(points)
+    # print(lines)
+    # print(points)
     res = {}
     quick_lines(points, lines, 0, len(points) - 1, 0, len(lines) - 1, res)
 
