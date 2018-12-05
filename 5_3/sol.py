@@ -1,4 +1,5 @@
 import sys
+import bisect
 from random import randint
 
 
@@ -86,6 +87,19 @@ def partition(beg, end, point_list):
     return new_pivot
 
 
+def calc_lines(points, lines):
+    begs = [l[0] for l in lines]
+    ends = [l[1] for l in lines]
+
+    sb = sorted(begs)
+    se = sorted(ends)
+    n = len(lines)
+
+    res = [(bisect.bisect_left(sb, p), bisect.bisect_right(se, p)) for p in points]
+
+    return res
+
+
 if __name__ == '__main__':
     inp = open('1', 'r')
     # inp = sys.stdin
@@ -93,8 +107,9 @@ if __name__ == '__main__':
     lines, points = read_array(inp)
     p_cp = list(points)
 
-    # print(lines)
-    # print(points)
+    print(lines)
+    print(points)
+    print(calc_lines(points, lines))
     res = {}
     quick_lines(points, lines, 0, len(points) - 1, 0, len(lines) - 1, res)
 
@@ -103,4 +118,5 @@ if __name__ == '__main__':
     # print(res)
     # print(p_cp)
     print(' '.join(map(str, [res[p] for p in p_cp])))
+
 
