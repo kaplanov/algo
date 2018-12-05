@@ -69,6 +69,7 @@ def partition_lines(beg, end, point, line_list):
 
 def partition(beg, end, point_list):
     pivot = beg
+    # randomly choose pivot
     swap(point_list, pivot, randint(beg, end))
 
     i = j = beg + 1
