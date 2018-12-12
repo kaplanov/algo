@@ -8,7 +8,6 @@ def read_array(inp):
     return lines, points
 
 
-
 def calc_lines(points, lines):
     begs = [l[0] for l in lines]
     ends = [l[1] for l in lines]
@@ -28,5 +27,3 @@ if __name__ == '__main__':
     p_cp = list(points)
 
     print(' '.join(map(str, calc_lines(points, lines))) )
-
-

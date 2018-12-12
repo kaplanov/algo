@@ -18,35 +18,44 @@ def vertical_split(x):
         median = len(x) // 2
         odd = len(x) % 2
         if odd:
-            return x[median]
+            return x[median], median
         else:
-            return (x[median] + x[median - 1]) / 2
+            return (x[median] + x[median - 1]) / 2, median
 
 
-def partition(points, v):
-    l, r = [], []
-    for p in points:
-        if p[0] < v:
-            l.append(p)
-        else:
-            r.append(p)
-    return l, r
+def partition(points):
+    if len(points) == 0:
+        return [], [], math.inf
+    elif len(points) == 1:
+        return [], points, points[0][0]
+    else:
+        m = len(points) // 2
+        return points[:m], points[m:], points[m][0]
 
 
-def min_border(point, v, d):
-    border_p = sorted([p for p in points if math.abs(p[0] - v) <= d], key=lambda p: p[1])
+def min_border(points, v, distance):
+    if math.isinf(distance):
+        return math.inf
+    border_p = sorted([p for p in points if abs(p[0] - v) <= distance], key=lambda p: p[1])
 
-    return float('inf')
+    res = [distance]
+    for i in range(len(border_p)):
+        current_point = border_p[i]
+        next_6_points = [border_p[i + shift] for shift in range(1, min(len(border_p) - i, 6))]
+        dists = [dist(current_point, pt) for pt in next_6_points]
+        dists.append(distance)
+        res.append(min(dists))
+
+    return min(res)
 
 
 def min_distance(points):
     if len(points) <= 1:
-        return float('inf')
+        return math.inf
     if len(points) == 2:
         return dist(points[0], points[1])
-    xs = sorted(x[0] for x in points)
-    v = vertical_split(xs)
-    lp, rp = partition(points, v)
+
+    lp, rp, v = partition(points)
 
     min_left = min_distance(lp)
     min_right = min_distance(rp)
@@ -56,18 +65,18 @@ def min_distance(points):
 
 
 def dist(p1, p2):
-    return math.sqrt((p1[0] - p2[0])**2 + (p2[0] - p2[1])**2)
+    return math.sqrt((p1[0] - p2[0])**2 + (p1[1] - p2[1])**2)
 
 
 if __name__ == '__main__':
-    inp = open('1', 'r')
+    inp = open('3', 'r')
     # inp = sys.stdin
 
     points = read_array(inp)
-    x = sorted(x[0] for x in points)
-    print(points)
+    p_sorted = sorted(points, key=lambda p: p[0])
+    print(p_sorted)
 
-    print(min_distance(points))
+    print(min_distance(p_sorted))
 
 
 
