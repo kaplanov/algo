@@ -3,9 +3,7 @@ import math
 
 def read_array(inp):
     n = int(inp.readline())
-    points = [tuple(map(int, inp.readline().split())) for _ in range(n)]
-
-    return points
+    return [tuple(map(int, inp.readline().split())) for _ in range(n)]
 
 
 def partition(points):
@@ -18,19 +16,22 @@ def min_border(points, v, distance):
         return math.inf
     border_points = sorted([p for p in points if abs(p[0] - v) <= distance], key=lambda p: p[1])
 
-    res = []
-    for i in range(len(border_points)):
-        current_point = border_points[i]
-        next_max_6_points = [border_points[i + shift] for shift in range(1, min(len(border_points) - i, 6))]
-        dists = [distance] + [calc_dist(current_point, pt) for pt in next_max_6_points]
-
-        res.append(min(dists))
-
-    return min(res)
+    return min(
+        calc_dist(border_points[i], border_points[i + j])
+        for i in range(len(border_points))
+        for j in range(1, min(len(border_points) - i, 6))
+    )
 
 
 def min_distance(points):
-    if len(points) <= 1:
+    """
+        Вот тут не очень понял, почему assert len(points) >= 2 лучше
+        У нас же база рекурсии не только 2 точки, но и одна тоже. (меньше одно, дествительно, нет смысла проверять)
+        Например, при разделении массива из 2 точек.
+        В таком случае возращение бесконечности сродни инициализации 0 или -1 в задачах на максимальное кол-ов элементов.
+        Или я что-то неправильно понимаю?
+    """
+    if len(points) == 1:
         return math.inf
     if len(points) == 2:
         return calc_dist(points[0], points[1])
